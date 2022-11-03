@@ -182,29 +182,31 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header isLoggedIn={loggedIn} routePaths={routePaths}/>
-        <Switch>
-          <Route exact path={routePaths.signIn}>
-            <Login routePaths={routePaths}/>
-          </Route>
-          <Route exact path={routePaths.signUp}>
-            <Register routePaths={routePaths}/>
-          </Route>
-          <Route exact path={routePaths.profile}>
-            <Profile onLogOut={handleLogOut}/>
-          </Route>
-          <Route exact path={routePaths.main}>
-            <Main/>
-          </Route>
-          <Route exact path={routePaths.movies}>
-            <Movies/>
-          </Route>
-          <Route exact path={routePaths.savedMovies}>
-            <SavedMovies/>
-          </Route>
-          <Route path='*'><PageNotFound/>
-          </Route>
-        </Switch>
+        <Header isLoggedIn={loggedIn} routePaths={routePaths} />
+        <main>
+          <Switch>
+            <Route exact path={routePaths.signIn}>
+              <Login routePaths={routePaths} />
+            </Route>
+            <Route exact path={routePaths.signUp}>
+              <Register routePaths={routePaths} />
+            </Route>
+            <Route exact path={routePaths.profile}>
+              <Profile onLogOut={handleLogOut} />
+            </Route>
+            <Route exact path={routePaths.main}>
+              <Main />
+            </Route>
+            <Route exact path={routePaths.movies}>
+              <Movies />
+            </Route>
+            <Route exact path={routePaths.savedMovies}>
+              <SavedMovies />
+            </Route>
+            <Route path='*'><PageNotFound />
+            </Route>
+          </Switch>
+        </main>
         <Footer routePaths={routePaths}></Footer>
       </div>
     </CurrentUserContext.Provider>

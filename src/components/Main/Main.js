@@ -4,7 +4,7 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import './Main.css';
 
-function Footer(props) {
+function Main(props) {
   return (
     <section className='main'>
       <Promo/>
@@ -15,4 +15,4 @@ function Footer(props) {
   );
 }
 
-export default Footer;
+export default Main;

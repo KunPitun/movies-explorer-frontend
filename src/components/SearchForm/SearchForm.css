@@ -1,0 +1,127 @@
+.search-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  font-weight: 400;
+  border-bottom: 1px solid #424242;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .search-form {
+    padding-bottom: 109px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .search-form {
+    padding-bottom: 69px;
+  }
+}
+
+.search-form__input {
+  border: none;
+  padding: 0 calc(80px + 19px) 0 19px;
+  outline: none;
+  background-color: #2F2F2F;
+  border-radius: 9px;
+  height: 72px;
+  grid-row: 1/2;
+  grid-column: 1/2;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8B8B8B;
+  min-width: calc(300px - 99px - 19px);
+}
+
+@media screen and (min-width: 768px) {
+  .search-form__input {
+    padding: 0 307px 0 63px;
+    background-image: url(../../images/search-form-icon.svg);
+    background-repeat: no-repeat;
+    background-position: 19px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .search-form__input {
+    padding-right: 337px;
+  }
+}
+
+.search-form__input:focus {
+  border-bottom: 1px solid #3DDC84;
+  height: 70px;
+  padding-top: 1px;
+}
+
+.search-form__input:focus ~ .search-form__checkbox-description {
+  border-left: 1px solid #3DDC84;
+}
+
+.search-form__search-btn {
+  width: 34px;
+  height: 34px;
+  background-color: #4285F4;
+  border-radius: 48px;
+  border: none;
+  padding: 0;
+  background-image: url(../../images/search-btn.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  grid-row: 1/2;
+  grid-column: 1/2;
+  align-self: center;
+  justify-self: end;
+  margin-right: 19px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+@media screen and (min-width: 768px) {
+  .search-form__search-btn {
+    margin-right: 227px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .search-form__search-btn {
+    margin-right: 257px;
+  }
+}
+
+.search-form__search-btn:hover {
+  background-position: 60%;
+  background-color: #3DDC84;
+}
+
+.search-form__checkbox-description {
+  font-size: 11px;
+  line-height: 18px;
+  color: #FFFFFF;
+  margin: 45px 0 44px 0;
+  justify-self: center;
+}
+
+@media screen and (min-width: 768px) {
+  .search-form__checkbox-description {
+    font-size: 13px;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    margin: 0 20px 0 0;
+    justify-self: end;
+    align-self: center;
+    height: 40px;
+    border-left: 1px solid #505050;
+    padding-left: 19px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .search-form__checkbox-description {
+    margin-right: 30px;
+    padding-left: 29px;
+  }
+}

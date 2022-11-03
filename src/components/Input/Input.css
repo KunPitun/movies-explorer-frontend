@@ -1,0 +1,83 @@
+.input {
+  display: grid;
+}
+
+.input__description {
+  margin: 0 0 5px 0;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+}
+
+.input__description_type_profile {
+  color: #FFFFFF;
+  margin: 0;
+  grid-row: 1/3;
+  grid-column: 1/2;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.input__input {
+  outline: none;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  background-color: transparent;
+  padding: 0 0 10px 0;
+  border: none;
+  border-bottom: 1px solid #424242;
+  margin-bottom: calc(35px - 10px - 1px);
+  grid-row: 2/4;
+  grid-column: 1/2;
+}
+
+.input__input:focus {
+  border-bottom: 1px solid #4285F4;
+}
+
+.input__input_type_profile {
+  grid-row: 1/3;
+  grid-column: 1/2;
+  text-align: end;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  padding-bottom: 16px;
+  margin-bottom: 17px;
+}
+
+.input__input_type_email {
+  font-weight: 500;
+}
+
+.input__input_type_last {
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-weight: 400;
+}
+
+.input__input_type_last:focus {
+  border: none;
+}
+
+.input__error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  grid-row: 2/4;
+  grid-column: 1/2;
+  justify-self: start;
+  margin-top: calc(17px * 2);
+  display: none;
+}
+
+.input__error_visible {
+  display: block;
+}

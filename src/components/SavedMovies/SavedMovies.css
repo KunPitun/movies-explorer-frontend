@@ -1,0 +1,21 @@
+.saved-movies {
+  padding: 80px 10px 140px 10px;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: repeat(2, max-content);
+  min-height: calc(100vh - 74px - 270px - 80px - 140px);
+}
+
+@media screen and (min-width: 768px) {
+  .saved-movies {
+    padding: 80px 30px 140px 30px;
+    min-height: calc(100vh - 74px - 172px - 80px - 140px);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .saved-movies {
+    padding: 70px 70px 140px 70px;
+    min-height: calc(100vh - 74px - 172px - 70px - 140px);
+  }
+}

@@ -54,7 +54,7 @@ function App() {
         setCurrentUser(user.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.getUserDataErrorMessage });
       });
     mainApi.getUserMovies()
@@ -64,7 +64,7 @@ function App() {
       })
       .catch((err) => {
         setIsSavedMoviesApiError(true);
-        console.log(err);
+        console.log(err.message);
       });
     if (isAllFilmsInput) {
       handleSearchMovies(JSON.parse(localStorage.getItem('allFilmsInputs')), false);
@@ -82,7 +82,7 @@ function App() {
         })
         .catch((err) => {
           localStorage.setItem('loggedIn', JSON.stringify(false));
-          console.log(err);
+          console.log(err.message);
         });
     }
   }
@@ -97,8 +97,12 @@ function App() {
         setIsInputsDisabled(false);
       })
       .catch((err) => {
-        console.log(err);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerErrorMessage });
+        console.log(err.message);
+        if (err.status === 409) {
+          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerUserIsAlreadyRegisteredErrorMessage });
+        } else {
+          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerErrorMessage });
+        }
       });
   }
 
@@ -116,7 +120,7 @@ function App() {
         setIsInputsDisabled(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.loginErrorMessage });
       });
   }
@@ -139,7 +143,7 @@ function App() {
         setIsInputsDisabled(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.profileUpdateErrorMessage });
       });
   }
@@ -152,7 +156,7 @@ function App() {
         setFindedSavedMovies([newMovie.data, ...savedMovies]);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.addMovieErrorMessage });
       });
   }
@@ -165,7 +169,7 @@ function App() {
         setFindedSavedMovies((state) => state.filter((c) => c._id !== cardToDelete._id));
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.deleteMovieErrorMessage });
       });
   }
@@ -240,7 +244,7 @@ function App() {
           })
           .catch((err) => {
             setIsAllMoviesApiError(true);
-            console.log(err);
+            console.log(err.message);
           });
       } else {
         handleSetFindedMovies(allMovies);

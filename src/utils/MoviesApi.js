@@ -1,8 +1,7 @@
-const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-const UPLOADS_URL = 'https://api.nomoreparties.co';
+import { URL } from "./Urls";
 
 export const getAllMovies = () => {
-  return fetch(`${BASE_URL}/`, {
+  return fetch(`${URL.moviesApiBaseUrl}/`, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -11,7 +10,7 @@ export const getAllMovies = () => {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return Promise.reject({ message: `Ошибка ${res.status}`, status: res.status });
     })
     .then((movies) => {
       return movies.map((movie) => {
@@ -25,8 +24,8 @@ export const getAllMovies = () => {
           duration: movie.duration,
           description: movie.description,
           trailerLink: movie.trailerLink,
-          image: UPLOADS_URL + movie.image.url,
-          thumbnail: UPLOADS_URL + movie.image.formats.thumbnail.url,
+          image: URL.moviesApiUploadsUrl + movie.image.url,
+          thumbnail: URL.moviesApiUploadsUrl + movie.image.formats.thumbnail.url,
         };
       });
     })

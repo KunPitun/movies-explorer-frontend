@@ -1,30 +1,62 @@
 import React from 'react';
 import './Profile.css';
 import Input from '../Input/Input';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useFormWithValidation } from '../useFormWithValidation';
 
-function Profile(props) {
-  const [email, setEmail] = React.useState('');
-  const [emailError, setEmailError] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [nameError, setNameError] = React.useState('');
+function Profile(p) {
+  const form = useFormWithValidation();
+  const currentUser = React.useContext(CurrentUserContext);
 
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = form.values['form-input-name'];
+    const email = form.values['form-input-email'];
+    p.onUpdateUser(name, email);
+    form.resetForm({ 'form-input-name': name, 'form-input-email': email });
   }
 
   return (
-    <section className='profile'>
-      <h2 className='profile__title'>{`Привет, ${props.name}`}</h2>
-      <form className='profile__form'>
-        <Input isProfile='true' onChange={handleChangeName} value={name} type='name' description='Имя' isError={nameError}></Input>
-        <Input isLast={true} isProfile='true' onChange={handleChangeEmail} value={email} type='email' description='E-mail' isError={emailError}></Input>
+    <section
+      onSubmit={handleSubmit}
+      className='profile'>
+      <h2
+        className='profile__title'>
+        {`Привет, ${currentUser.name}`}
+      </h2>
+      <form
+        className='profile__form'>
+        <Input
+          isInputsDisabled={p.isInputsDisabled}
+          isProfile='true'
+          onChange={form.handleChange}
+          value={form.values['form-input-name']}
+          type='name'
+          description='Имя'
+          error={form.errors['form-input-name']}
+          minLength={2}
+          maxLength={30} />
+        <Input
+          isInputsDisabled={p.isInputsDisabled}
+          isProfile='true'
+          onChange={form.handleChange}
+          value={form.values['form-input-email']}
+          type='email'
+          description='E-mail'
+          error={form.errors['form-input-email']} />
+        <button
+          type='submit'
+          className='profile__submit-btn'
+          disabled={!form.isValid}>
+          Редактировать
+        </button>
       </form>
-      <button type='submit' className='profile__submit-btn'>Редактировать</button>
-      <button onClick={props.onLogOut} className='profile__exit-btn'>Выйти из аккаунта</button>
+      <button
+        onClick={p.onLogOut}
+        className='profile__exit-btn'
+        type='button'>
+        Выйти из аккаунта
+      </button>
     </section>
   );
 }

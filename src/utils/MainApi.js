@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.kunpitun.diploma.nomoredomains.icu';
+export const BASE_URL = 'http://api.kunpitun.diploma.nomoredomains.icu';
 
 export const getUserData = () => {
   return fetch(`${BASE_URL}/users/me`, {
@@ -11,7 +11,7 @@ export const getUserData = () => {
     .then(checkResponse);
 }
 
-export const giveUserInfo = (name, info) => {
+export const giveUserInfo = (name, email) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
@@ -20,13 +20,13 @@ export const giveUserInfo = (name, info) => {
     },
     body: JSON.stringify({
       name: name,
-      about: info
+      email: email
     })
   })
     .then(checkResponse);
 }
 
-export const getMovies = () => {
+export const getUserMovies = () => {
   return fetch(`${BASE_URL}/movies`, {
     headers: {
       'Content-Type': 'application/json',
@@ -36,42 +36,20 @@ export const getMovies = () => {
     .then(checkResponse);
 }
 
-export const giveMoviesInfo = (
-  country,
-  director,
-  duration,
-  year,
-  description,
-  image,
-  trailerLink,
-  thumbnail,
-  nameRU,
-  nameEN,
-) => {
+export const giveUserMovieInfo = (movie) => {
   return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'authorization': `Bearer ${localStorage.getItem('jwt')}`,
     },
-    body: JSON.stringify({
-      country: country,
-      director: director,
-      duration: duration,
-      year: year,
-      description: description,
-      image: image,
-      trailerLink: trailerLink,
-      thumbnail: thumbnail,
-      nameRU: nameRU,
-      nameEN: nameEN,
-    })
+    body: JSON.stringify(movie)
   })
     .then(checkResponse);
 }
 
-export const deleteMovie = (movieId) => {
-  return fetch(`${BASE_URL}/cards/${movieId}`, {
+export const deleteUserMovie = (movieId) => {
+  return fetch(`${BASE_URL}/movies/${movieId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

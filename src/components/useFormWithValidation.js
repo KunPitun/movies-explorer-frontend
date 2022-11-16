@@ -11,6 +11,7 @@ export function useFormWithValidation() {
     'form-input-film-saved': localStorage.getItem('savedFilmsInput') ? localStorage.getItem('savedFilmsInput') : '',
     'form-input-film-all': localStorage.getItem('allFilmsInput') ? localStorage.getItem('allFilmsInput') : '',
   });
+
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
 

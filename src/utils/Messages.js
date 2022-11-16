@@ -2,7 +2,7 @@ export const MESSAGES = {
   getUserDataErrorMessage: 'Не удалось получить данные о пользователе! Попробуйте ещё раз.',
   registerErrorMessage: 'Не удалось зарегистрироваться! Попробуйте ещё раз.',
   registerEmailMatchesPasswordErrorMessage: 'E-mail не должен совпадать с паролем! Попробуйте ещё раз.',
-  registerUserIsAlreadyRegisteredErrorMessage: 'Пользователь уже зарегистрирован',
+  registerUserIsAlreadyRegisteredErrorMessage: 'Пользователь уже зарегистрирован.',
   loginErrorMessage: 'Не удалось войти! Попробуйте ещё раз.',
   profileUpdateMessage: 'Вы успешно обновили данные профиля!',
   profileUpdateErrorMessage: 'Не удалось обновить данные пользователя! Попробуйте ещё раз.',

@@ -205,8 +205,10 @@ function App() {
       if (findedMovies.length === 0) {
         if (isSaved) {
           setIsSavedMoviesSearchError(true);
+          setFindedSavedMovies([]);
         } else {
           setIsAllMoviesSearchError(true);
+          setFindedAllMovies([]);
         }
         return true;
       }

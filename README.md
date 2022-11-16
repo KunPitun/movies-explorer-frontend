@@ -11,3 +11,7 @@
 ## Ссылка на backend
 
 * https://api.kunpitun.diploma.nomoredomains.icu
+
+## Ссылка на pull request
+
+* https://github.com/KunPitun/movies-explorer-frontend/pull/2

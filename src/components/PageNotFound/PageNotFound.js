@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import './PageNotFound.css';
 
 function PageNotFound() {
@@ -16,7 +16,7 @@ function PageNotFound() {
         Страница не надена
       </h3>
       <Link
-        to={ROUTE_PATHS.main}
+        to={ROUTE_PATH.main}
         className="not-found__link">
         Назад
       </Link>

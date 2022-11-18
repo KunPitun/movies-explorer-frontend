@@ -1,15 +1,15 @@
 import { useLocation } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import React from 'react';
 import './MoviesCard.css';
 
 function MoviesCard(p) {
   const location = useLocation();
-  const isSaved = (location.pathname === ROUTE_PATHS.movies) ? p.savedMoviesCardsList.map((card) => card.movieId).some(movieId => movieId === p.movieCard.movieId) : false;
+  const isSaved = (location.pathname === ROUTE_PATH.movies) ? p.savedMoviesCardsList.map((card) => card.movieId).some(movieId => movieId === p.movieCard.movieId) : false;
   const cardLikeButtonClassName = (`movie-card__save-btn ${isSaved ? 'movie-card__save-btn_active' : ''}`);
 
   function handleBtnClick() {
-    if (location.pathname === ROUTE_PATHS.savedMovies) {
+    if (location.pathname === ROUTE_PATH.savedMovies) {
       p.onMovieDelete(p.movieCard);
     } else {
       if (isSaved) {
@@ -51,7 +51,7 @@ function MoviesCard(p) {
           alt={`Обложка фильма ${p.movieCard.name}`}
           src={p.movieCard.image} />
       </a>
-      {(location.pathname === ROUTE_PATHS.movies) ?
+      {(location.pathname === ROUTE_PATH.movies) ?
         <button
           onClick={handleBtnClick}
           className={cardLikeButtonClassName}

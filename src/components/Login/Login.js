@@ -1,10 +1,9 @@
 import React from 'react';
 import './Login.css';
 import Input from '../Input/Input';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import { useFormWithValidation } from '../useFormWithValidation';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function Login(p) {
   const form = useFormWithValidation();
@@ -13,7 +12,7 @@ function Login(p) {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      history.push(ROUTE_PATHS.main);
+      history.push(ROUTE_PATH.main);
     }
   });
 
@@ -25,7 +24,7 @@ function Login(p) {
       return;
     }
     p.onLogin(email, password);
-    form.resetForm({ 'form-input-password': '', 'form-input-email': '' });
+    form.resetForm({ 'form-input-password': password, 'form-input-email': email });
   }
 
   return (
@@ -35,7 +34,7 @@ function Login(p) {
         onSubmit={handleSubmit}
         className='login__form' noValidate>
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           onChange={form.handleChange}
           value={form.values['form-input-email']}
           type='email'
@@ -43,7 +42,7 @@ function Login(p) {
           error={form.errors['form-input-email']}>
         </Input>
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           onChange={form.handleChange}
           value={form.values['form-input-password']}
           type='password'
@@ -54,7 +53,7 @@ function Login(p) {
         <button
           type='submit'
           className='login__submit-btn'
-          disabled={!form.isValid}>
+          disabled={!form.isValid || p.isFormBlocked}>
           Войти
         </button>
       </form>
@@ -65,7 +64,7 @@ function Login(p) {
           Ещё не зарегистрированы?
         </p>
         <Link
-          to={ROUTE_PATHS.signUp}
+          to={ROUTE_PATH.signUp}
           className="login__link">
           Регистрация
         </Link>

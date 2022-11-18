@@ -5,8 +5,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../useFormWithValidation';
 
 function Profile(p) {
-  const form = useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
+  const form = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +27,7 @@ function Profile(p) {
       <form
         className='profile__form'>
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           isProfile='true'
           onChange={form.handleChange}
           value={form.values['form-input-name']}
@@ -37,7 +37,7 @@ function Profile(p) {
           minLength={2}
           maxLength={30} />
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           isProfile='true'
           onChange={form.handleChange}
           value={form.values['form-input-email']}
@@ -47,7 +47,7 @@ function Profile(p) {
         <button
           type='submit'
           className='profile__submit-btn'
-          disabled={!form.isValid}>
+          disabled={!form.isValid || p.isFormBlocked}>
           Редактировать
         </button>
       </form>

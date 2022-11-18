@@ -1,13 +1,13 @@
 import React from 'react';
 import './SearchForm.css';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { useLocation } from 'react-router-dom';
 import { useFormWithValidation } from '../useFormWithValidation';
 
 function SearchForm(p) {
   const location = useLocation();
-  const isSaved = location.pathname === ROUTE_PATHS.savedMovies ? true : false;
+  const isSaved = location.pathname === ROUTE_PATH.savedMovies ? true : false;
   const [isInvalidInput, setIsInvalidInput] = React.useState(false);
   const form = useFormWithValidation();
   const searchInputClassname = (`search-form__input search-form__input_${isInvalidInput ? 'error' : ''}`);

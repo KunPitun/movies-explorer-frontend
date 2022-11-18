@@ -2,6 +2,11 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import React from 'react';
+import {
+  SCREEN_WIDTH,
+  BASE_QUANTITY_OF_CARDS_FOR_SCREEN_WIDTH,
+  QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH
+} from '../../utils/Constants';
 
 function Movies(p) {
   const [moviesCardsList, setMoviesCardsList] = React.useState(p.moviesCardsList);
@@ -22,13 +27,13 @@ function Movies(p) {
 
   React.useEffect(() => {
     setMoviesCardsList(p.moviesCardsList);
-    if (screenWidth >= 1280 && p.moviesCardsList.length > 12) {
+    if (screenWidth >= SCREEN_WIDTH.big && p.moviesCardsList.length > BASE_QUANTITY_OF_CARDS_FOR_SCREEN_WIDTH.big) {
       setMoviesCardsList(p.moviesCardsList.slice(0, 12));
     }
-    if (screenWidth < 1280 && screenWidth >= 768 && p.moviesCardsList.length > 8) {
+    if (screenWidth < SCREEN_WIDTH.big && screenWidth >= SCREEN_WIDTH.middle && p.moviesCardsList.length > BASE_QUANTITY_OF_CARDS_FOR_SCREEN_WIDTH.middle) {
       setMoviesCardsList(p.moviesCardsList.slice(0, 8));
     }
-    if (screenWidth < 768 && screenWidth >= 320 && p.moviesCardsList.length > 5) {
+    if (screenWidth < SCREEN_WIDTH.middle && screenWidth >= SCREEN_WIDTH.small && p.moviesCardsList.length > BASE_QUANTITY_OF_CARDS_FOR_SCREEN_WIDTH.small) {
       setMoviesCardsList(p.moviesCardsList.slice(0, 5));
     }
   }, [p.moviesCardsList]);
@@ -48,20 +53,20 @@ function Movies(p) {
   }
 
   function handleMoreBtnClick() {
-    if (screenWidth >= 1280) {
+    if (screenWidth >= SCREEN_WIDTH.big) {
       if ((moviesCardsList.length % 2) === 0 && (moviesCardsList.length % 4) !== 0) {
-        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + 4)));
+        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH.big.cardsListDivisibleOnlyByTwo)));
       } else {
-        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + 6)));
+        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH.big.cardsListDivisibleByFour)));
       }
       if ((moviesCardsList.length % 3) === 0) {
-        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + 3)));
+        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH.big.cardsListDivisibleByThree)));
       }
     } else {
       if ((moviesCardsList.length % 2) === 0) {
-        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + 2)));
+        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH.middleAndSmall.cardsListDivisibleByTwo)));
       } else {
-        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + 3)));
+        setMoviesCardsList(p.moviesCardsList.slice(0, (moviesCardsList.length + QUANTITY_OF_CARDS_FOR_MORE_BTN_FOR_SCREEN_WIDTH.middleAndSmall.cardsListNotDivisibleByTwo)));
       }
     }
   }

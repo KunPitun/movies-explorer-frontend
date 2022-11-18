@@ -1,17 +1,17 @@
 import { useLocation } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import React from 'react';
 import './Footer.css';
 
 function Footer() {
 
   const location = useLocation();
-  const isLoginPage = location.pathname === ROUTE_PATHS.signIn ? true : false;
-  const isRegisterPage = location.pathname === ROUTE_PATHS.signUp ? true : false;
-  const isProfilePage = location.pathname === ROUTE_PATHS.profile ? true : false;
-  const isMainPage = location.pathname === ROUTE_PATHS.main ? true : false;
-  const routePathsValues = Object.values(ROUTE_PATHS);
-  const footerClassname = (`footer ${(location.pathname === ROUTE_PATHS.main) ? 'footer_type_main' : ''}`);
+  const isLoginPage = location.pathname === ROUTE_PATH.signIn ? true : false;
+  const isRegisterPage = location.pathname === ROUTE_PATH.signUp ? true : false;
+  const isProfilePage = location.pathname === ROUTE_PATH.profile ? true : false;
+  const isMainPage = location.pathname === ROUTE_PATH.main ? true : false;
+  const routePathsValues = Object.values(ROUTE_PATH);
+  const footerClassname = (`footer ${(location.pathname === ROUTE_PATH.main) ? 'footer_type_main' : ''}`);
 
   return (
     <>

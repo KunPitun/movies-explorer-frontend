@@ -2,8 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
-import { MESSAGES } from '../../utils/Messages';
+import { ROUTE_PATH, MESSAGE } from '../../utils/Constants';
 import { Route, Switch, withRouter, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute';
@@ -36,14 +35,18 @@ function App() {
   const [isAllMoviesApiError, setIsAllMoviesApiError] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState({ isOpen: false, message: '' });
   const [isPreloaderVisible, setIsPreloaderVisible] = React.useState(false);
-  const [isInputsDisabled, setIsInputsDisabled] = React.useState(false);
+  const [isFormBlocked, setIsFormBlocked] = React.useState(false);
 
   React.useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      getMainData();
-    }
-    handleTokenCheck();
+    handleTokenCheck()
+      .then(() => {
+        getMainData();
+      })
+      .catch((err) => {
+        if (JSON.parse(localStorage.getItem('loggedIn'))) {
+          console.log(err.message);
+        }
+      });
   }, []);
 
   function getMainData() {
@@ -55,7 +58,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err.message);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.getUserDataErrorMessage });
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.getUserDataError });
       });
     mainApi.getUserMovies()
       .then((movies) => {
@@ -74,77 +77,80 @@ function App() {
   function handleTokenCheck() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      auth.checkToken(jwt)
+      return auth.checkToken(jwt)
         .then((res) => {
           if (res) {
             localStorage.setItem('loggedIn', JSON.stringify(true));
           }
         })
         .catch((err) => {
-          localStorage.setItem('loggedIn', JSON.stringify(false));
+          handleLogOut();
           console.log(err.message);
         });
+    } else {
+      localStorage.setItem('loggedIn', JSON.stringify(false));
+      return Promise.reject({ message: MESSAGE.jwtErrorMessage })
     }
   }
 
   function handleRegister(name, email, password) {
-    setIsInputsDisabled(true);
+    setIsFormBlocked(true);
     auth.register(name, email, password)
       .then(() => {
         handleLogin(email, password);
       })
       .finally(() => {
-        setIsInputsDisabled(false);
+        setIsFormBlocked(false);
       })
       .catch((err) => {
         console.log(err.message);
         if (err.status === 409) {
-          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerUserIsAlreadyRegisteredErrorMessage });
+          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.registerUserIsAlreadyRegisteredError });
         } else {
-          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerErrorMessage });
+          setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.registerError });
         }
       });
   }
 
   function handleLogin(email, password) {
-    setIsInputsDisabled(true);
+    setIsFormBlocked(true);
     auth.authorize(email, password)
       .then((data) => {
         if (data.token) {
           localStorage.setItem('loggedIn', JSON.stringify(true));
           getMainData();
-          history.push(ROUTE_PATHS.movies);
+          history.push(ROUTE_PATH.movies);
         }
       })
       .finally(() => {
-        setIsInputsDisabled(false);
+        setIsFormBlocked(false);
       })
       .catch((err) => {
         console.log(err.message);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.loginErrorMessage });
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.loginError });
       });
   }
 
   function handleLogOut() {
     localStorage.clear();
     setFindedAllMovies([]);
-    history.push(ROUTE_PATHS.main);
+    history.push(ROUTE_PATH.main);
   }
 
   function handleUpdateUser(name, email) {
-    setIsInputsDisabled(true);
+    setIsFormBlocked(true);
     mainApi.giveUserInfo(name, email)
       .then((user) => {
         localStorage.setItem('currentUser', JSON.stringify(user.data));
         setCurrentUser(user.data);
       })
       .finally(() => {
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.profileUpdateMessage });
-        setIsInputsDisabled(false);
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.profileUpdate });
+        setIsFormBlocked(false);
       })
       .catch((err) => {
         console.log(err.message);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.profileUpdateErrorMessage });
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.profileUpdateError });
       });
   }
 
@@ -157,7 +163,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err.message);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.addMovieErrorMessage });
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.addMovieError });
       });
   }
 
@@ -170,7 +176,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err.message);
-        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGES.deleteMovieErrorMessage });
+        setIsInfoTooltipOpen({ isOpen: true, message: MESSAGE.deleteMovieError });
       });
   }
 
@@ -228,7 +234,6 @@ function App() {
 
     if (isSaved) {
       setIsSavedMoviesSearchError(false);
-      localStorage.setItem('savedFilmsInput', filmInput);
       handleSetFindedMovies(savedMovies);
     } else {
       setIsAllMoviesSearchError(false);
@@ -264,34 +269,34 @@ function App() {
           <Switch>
             <Route
               exact
-              path={ROUTE_PATHS.signIn}>
+              path={ROUTE_PATH.signIn}>
               <Login
-                isInputsDisabled={isInputsDisabled}
+                isFormBlocked={isFormBlocked}
                 onLogin={handleLogin} />
             </Route>
             <Route
               exact
-              path={ROUTE_PATHS.signUp}>
+              path={ROUTE_PATH.signUp}>
               <Register
-                isInputsDisabled={isInputsDisabled}
+                isFormBlocked={isFormBlocked}
                 isInfoTooltipOpen={setIsInfoTooltipOpen}
                 onRegister={handleRegister} />
             </Route>
             <Route
               exact
-              path={ROUTE_PATHS.main}>
+              path={ROUTE_PATH.main}>
               <Main />
             </Route>
             <ProtectedRoute
               exact
-              path={ROUTE_PATHS.profile}
+              path={ROUTE_PATH.profile}
               onUpdateUser={handleUpdateUser}
               onLogOut={handleLogOut}
-              isInputsDisabled={isInputsDisabled}
+              isFormBlocked={isFormBlocked}
               component={Profile} />
             <ProtectedRoute
               exact
-              path={ROUTE_PATHS.movies}
+              path={ROUTE_PATH.movies}
               component={Movies}
               onSearch={handleSearchMovies}
               moviesCardsList={findedAllMovies}
@@ -303,7 +308,7 @@ function App() {
               isApiError={isAllMoviesApiError} />
             <ProtectedRoute
               exact
-              path={ROUTE_PATHS.savedMovies}
+              path={ROUTE_PATH.savedMovies}
               component={SavedMovies}
               onSearch={handleSearchMovies}
               savedMoviesCardsList={savedMovies}

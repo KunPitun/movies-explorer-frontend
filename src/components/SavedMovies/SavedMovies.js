@@ -6,13 +6,6 @@ import React from 'react';
 function SavedMovies(p) {
   const [isShorts, setIsShorts] = React.useState(localStorage.getItem('savedFilmsCheckbox') ? JSON.parse(localStorage.getItem('savedFilmsCheckbox')) : true);
 
-  React.useEffect(() => {
-    const isSavedFilmsInput = localStorage.getItem('savedFilmsInput') ? true : false;
-    if (isSavedFilmsInput) {
-      p.onSearch(localStorage.getItem('savedFilmsInput'), true);
-    }
-  }, [p.savedMoviesCardsList]);
-
   function handleChangeCheckbox() {
     setIsShorts(!isShorts);
     localStorage.setItem('savedFilmsCheckbox', JSON.stringify(!isShorts));

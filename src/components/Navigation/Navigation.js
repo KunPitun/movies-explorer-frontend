@@ -1,12 +1,12 @@
 import './Navigation.css';
 import React from 'react';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import { Link, useLocation, NavLink } from 'react-router-dom';
 
 function Navigation() {
   const location = useLocation();
-  const isLoginPage = location.pathname === ROUTE_PATHS.signIn ? true : false;
-  const isRegisterPage = location.pathname === ROUTE_PATHS.signUp ? true : false;
+  const isLoginPage = location.pathname === ROUTE_PATH.signIn ? true : false;
+  const isRegisterPage = location.pathname === ROUTE_PATH.signUp ? true : false;
   const [isMobileMenueOpen, setIsMobileMenueOpen] = React.useState(false);
   const isLoggedIn = localStorage.getItem('loggedIn') ? JSON.parse(localStorage.getItem('loggedIn')) : false;
 
@@ -28,7 +28,7 @@ function Navigation() {
             className='navigation__link-element'>
             <Link
               className='navigation__link navigation__link_type_register'
-              to={ROUTE_PATHS.signUp}>
+              to={ROUTE_PATH.signUp}>
               Регистрация
             </Link>
           </li>
@@ -36,7 +36,7 @@ function Navigation() {
             className='navigation__link-element navigation__link-element_type_login'>
             <Link
               className='navigation__link navigation__link_type_login'
-              to={ROUTE_PATHS.signIn}>
+              to={ROUTE_PATH.signIn}>
               Войти
             </Link>
           </li>
@@ -51,7 +51,7 @@ function Navigation() {
             <li
               className='navigation__link-element navigation__link-element_type_big-size'>
               <Link
-                className='navigation__link' to={ROUTE_PATHS.movies}>
+                className='navigation__link' to={ROUTE_PATH.movies}>
                 Фильмы
               </Link>
             </li>
@@ -59,7 +59,7 @@ function Navigation() {
               className='navigation__link-element navigation__link-element_type_big-size'>
               <Link
                 className='navigation__link navigation__link_type_saved'
-                to={ROUTE_PATHS.savedMovies}>
+                to={ROUTE_PATH.savedMovies}>
                 Сохранённые фильмы
               </Link>
             </li>
@@ -67,7 +67,7 @@ function Navigation() {
               className='navigation__link-element navigation__link-element_type_big-size'>
               <Link
                 className='navigation__link navigation__link_type_profile'
-                to={ROUTE_PATHS.profile}>
+                to={ROUTE_PATH.profile}>
                 Аккаунт
               </Link>
             </li>
@@ -87,7 +87,7 @@ function Navigation() {
                 exact
                 activeClassName='navigation__link_active'
                 className='navigation__link navigation__link_type_nav'
-                to={ROUTE_PATHS.main}
+                to={ROUTE_PATH.main}
                 onClick={handleCloseMenueButton}>
                 Главная
               </NavLink>
@@ -98,7 +98,7 @@ function Navigation() {
                 exact
                 activeClassName='navigation__link_active'
                 className='navigation__link navigation__link_type_nav'
-                to={ROUTE_PATHS.movies}
+                to={ROUTE_PATH.movies}
                 onClick={handleCloseMenueButton}>
                 Фильмы
               </NavLink>
@@ -109,7 +109,7 @@ function Navigation() {
                 exact
                 activeClassName='navigation__link_active'
                 className='navigation__link navigation__link_type_nav'
-                to={ROUTE_PATHS.savedMovies}
+                to={ROUTE_PATH.savedMovies}
                 onClick={handleCloseMenueButton}>
                 Сохранённые фильмы
               </NavLink>
@@ -118,7 +118,7 @@ function Navigation() {
               className='navigation__link-element navigation__link-element_type_mobile-menue'>
               <Link
                 className='navigation__link navigation__link_type_profile'
-                to={ROUTE_PATHS.profile}
+                to={ROUTE_PATH.profile}
                 onClick={handleCloseMenueButton}>
                 Аккаунт
               </Link>

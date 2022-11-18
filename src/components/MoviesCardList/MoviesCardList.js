@@ -1,5 +1,5 @@
 import './MoviesCardList.css';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH } from '../../utils/Constants';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useLocation } from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
@@ -19,12 +19,12 @@ function MoviesCardList(p) {
     onMovieSave={p.onMovieSave}
     onMovieDelete={p.onMovieDelete}
     movieCard={card}
-    key={location.pathname === ROUTE_PATHS.savedMovies ? card._id : card.movieId}
+    key={location.pathname === ROUTE_PATH.savedMovies ? card._id : card.movieId}
     savedMoviesCardsList={p.savedMoviesCardsList} />)
   );
 
-  const isNoSavedMovies = (p.savedMoviesCardsList.length === 0 && location.pathname === ROUTE_PATHS.savedMovies) ? true : false;
-  const isAllMoviesInput = (localStorage.getItem('allFilmsInput') || location.pathname === ROUTE_PATHS.savedMovies) ? true : false;
+  const isNoSavedMovies = (p.savedMoviesCardsList.length === 0 && location.pathname === ROUTE_PATH.savedMovies) ? true : false;
+  const isAllMoviesInput = (localStorage.getItem('allFilmsInput') || location.pathname === ROUTE_PATH.savedMovies) ? true : false;
 
   return (
     <ul

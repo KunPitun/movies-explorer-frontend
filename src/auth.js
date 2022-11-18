@@ -1,4 +1,4 @@
-import { URL } from "./utils/Urls";
+import { URL } from "./utils/Constants";
 
 export const register = (name, email, password) => {
   return fetch(`${URL.mainApiBaseUrl}/signup`, {

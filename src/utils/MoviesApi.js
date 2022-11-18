@@ -1,4 +1,4 @@
-import { URL } from "./Urls";
+import { URL } from "./Constants";
 
 export const getAllMovies = () => {
   return fetch(`${URL.moviesApiBaseUrl}/`, {

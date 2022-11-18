@@ -1,10 +1,9 @@
 import React from 'react';
 import './Register.css';
 import Input from '../Input/Input';
-import { ROUTE_PATHS } from '../../utils/RoutePaths';
+import { ROUTE_PATH, MESSAGE } from '../../utils/Constants';
 import { useFormWithValidation } from '../useFormWithValidation';
 import { Link, useHistory } from 'react-router-dom';
-import { MESSAGES } from '../../utils/Messages';
 
 function Register(p) {
   const form = useFormWithValidation();
@@ -13,7 +12,7 @@ function Register(p) {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      history.push(ROUTE_PATHS.main);
+      history.push(ROUTE_PATH.main);
     }
   });
 
@@ -24,10 +23,10 @@ function Register(p) {
     const password = form.values['form-input-password'];
     if (email !== password) {
       p.onRegister(name, email, password);
-      form.resetForm({ 'form-input-password': '', 'form-input-email': '', 'form-input-name': '' });
+      form.resetForm({ 'form-input-password': password, 'form-input-email': email, 'form-input-name': name });
     }
     else {
-      p.isInfoTooltipOpen({ isOpen: true, message: MESSAGES.registerEmailMatchesPasswordErrorMessage });
+      p.isInfoTooltipOpen({ isOpen: true, message: MESSAGE.registerEmailMatchesPasswordError });
     }
   }
 
@@ -38,7 +37,7 @@ function Register(p) {
       <form
         className='register__form' noValidate>
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           onChange={form.handleChange}
           value={form.values['form-input-name']}
           type='name' description='Имя'
@@ -46,14 +45,14 @@ function Register(p) {
           minLength={2}
           maxLength={30} />
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           onChange={form.handleChange}
           value={form.values['form-input-email']}
           type='email'
           description='E-mail'
           error={form.errors['form-input-email']} />
         <Input
-          isInputsDisabled={p.isInputsDisabled}
+          isInputsDisabled={p.isFormBlocked}
           onChange={form.handleChange}
           value={form.values['form-input-password']}
           type='password'
@@ -63,7 +62,7 @@ function Register(p) {
         <button
           type='submit'
           className='register__submit-btn'
-          disabled={!form.isValid}>
+          disabled={!form.isValid || p.isFormBlocked}>
           Зарегистрироваться
         </button>
       </form>
@@ -74,7 +73,7 @@ function Register(p) {
           Уже зарегистрированы?
         </p>
         <Link
-          to={ROUTE_PATHS.signIn}
+          to={ROUTE_PATH.signIn}
           className="register__link">
           Войти
         </Link>

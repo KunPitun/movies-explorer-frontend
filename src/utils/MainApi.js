@@ -1,7 +1,7 @@
-export const BASE_URL = 'https://api.kunpitun.diploma.nomoredomains.icu';
+import { URL } from "./Constants";
 
 export const getUserData = () => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${URL.mainApiBaseUrl}/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -11,8 +11,8 @@ export const getUserData = () => {
     .then(checkResponse);
 }
 
-export const giveUserInfo = (name, info) => {
-  return fetch(`${BASE_URL}/users/me`, {
+export const giveUserInfo = (name, email) => {
+  return fetch(`${URL.mainApiBaseUrl}/users/me`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -20,14 +20,14 @@ export const giveUserInfo = (name, info) => {
     },
     body: JSON.stringify({
       name: name,
-      about: info
+      email: email
     })
   })
     .then(checkResponse);
 }
 
-export const getMovies = () => {
-  return fetch(`${BASE_URL}/movies`, {
+export const getUserMovies = () => {
+  return fetch(`${URL.mainApiBaseUrl}/movies`, {
     headers: {
       'Content-Type': 'application/json',
       'authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -36,42 +36,20 @@ export const getMovies = () => {
     .then(checkResponse);
 }
 
-export const giveMoviesInfo = (
-  country,
-  director,
-  duration,
-  year,
-  description,
-  image,
-  trailerLink,
-  thumbnail,
-  nameRU,
-  nameEN,
-) => {
-  return fetch(`${BASE_URL}/movies`, {
+export const giveUserMovieInfo = (movie) => {
+  return fetch(`${URL.mainApiBaseUrl}/movies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'authorization': `Bearer ${localStorage.getItem('jwt')}`,
     },
-    body: JSON.stringify({
-      country: country,
-      director: director,
-      duration: duration,
-      year: year,
-      description: description,
-      image: image,
-      trailerLink: trailerLink,
-      thumbnail: thumbnail,
-      nameRU: nameRU,
-      nameEN: nameEN,
-    })
+    body: JSON.stringify(movie)
   })
     .then(checkResponse);
 }
 
-export const deleteMovie = (movieId) => {
-  return fetch(`${BASE_URL}/cards/${movieId}`, {
+export const deleteUserMovie = (movieId) => {
+  return fetch(`${URL.mainApiBaseUrl}/movies/${movieId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -85,5 +63,5 @@ const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка ${res.status}`);
+  return Promise.reject({ message: `Ошибка ${res.status}`, status: res.status });
 }

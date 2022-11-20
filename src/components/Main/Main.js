@@ -4,9 +4,10 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import './Main.css';
 
-function Main(props) {
+function Main() {
   return (
-    <section className='main'>
+    <section
+    className='main'>
       <Promo/>
       <AboutProject/>
       <Techs/>

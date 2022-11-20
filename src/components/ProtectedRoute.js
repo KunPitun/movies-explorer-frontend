@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { ROUTE_PATH } from '../utils/Constants';
 
 const ProtectedRoute = ({ component: Component, ...props  }) => {
   return (
     <Route>
       {
-        () => props.loggedIn ? <Component {...props} /> : <Redirect to="/sign-in" />
+        () => JSON.parse(localStorage.getItem('loggedIn')) ? <Component {...props} /> : <Redirect to={ROUTE_PATH.main} />
       }
     </Route>
 )}

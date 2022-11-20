@@ -1,30 +1,65 @@
 import { useLocation } from 'react-router-dom';
+import { ROUTE_PATH } from '../../utils/Constants';
 import React from 'react';
 import './MoviesCard.css';
-import testFilmImage from '../../images/author-avatar.jpg';
 
-function MoviesCard(props) {
+function MoviesCard(p) {
   const location = useLocation();
-  const [isSaved, setIsSaved] = React.useState(false);
-  const cardLikeButtonClassName = (
-    `movie-card__save-btn ${isSaved ? 'movie-card__save-btn_active' : ''}`
-  );
+  const isSaved = (location.pathname === ROUTE_PATH.movies) ? p.savedMoviesCardsList.map((card) => card.movieId).some(movieId => movieId === p.movieCard.movieId) : false;
+  const cardLikeButtonClassName = (`movie-card__save-btn ${isSaved ? 'movie-card__save-btn_active' : ''}`);
 
-  function handleSaveClick() {
-    setIsSaved(!isSaved);
+  function handleBtnClick() {
+    if (location.pathname === ROUTE_PATH.savedMovies) {
+      p.onMovieDelete(p.movieCard);
+    } else {
+      if (isSaved) {
+        p.onMovieDelete(p.movieCard);
+      } else {
+        p.onMovieSave(p.movieCard);
+      }
+    }
   }
 
-  function handleDeleteClick() {
-  
+  function duration(duration) {
+    const hours = Math.trunc(duration / 60);
+    const minutes = duration % 60;
+    return `${hours}ч ${minutes}м`;
   }
 
   return (
-    <li className='movie-card'>
-      <h2 className='movie-card__title'>Pepe</h2>
-      <p className='movie-card__duration'>9ч 9м</p>
-      <img className='movie-card__image' alt={`Обложка фильма ${'pepe'}`} src={testFilmImage}></img>
-      {(location.pathname === '/movies') && <button onClick={handleSaveClick} className={cardLikeButtonClassName} type="button"></button>}
-      {(location.pathname === '/saved-movies') && <button onClick={handleDeleteClick} className='movie-card__delete-btn' type="button"></button>}     
+    <li
+      className='movie-card' >
+      <h2
+        className='movie-card__title'>
+        <a
+          target="_blank"
+          rel='noreferrer'
+          href={p.movieCard.trailerLink}
+          className="movie-card__link">{p.movieCard.nameRU}</a>
+      </h2>
+      <p
+        className='movie-card__duration'>
+        {duration(p.movieCard.duration)}
+      </p>
+      <a
+        target="_blank"
+        rel='noreferrer'
+        href={p.movieCard.trailerLink}
+        className="movie-card__link">
+        <img
+          className='movie-card__image'
+          alt={`Обложка фильма ${p.movieCard.name}`}
+          src={p.movieCard.image} />
+      </a>
+      {(location.pathname === ROUTE_PATH.movies) ?
+        <button
+          onClick={handleBtnClick}
+          className={cardLikeButtonClassName}
+          type="button" /> :
+        <button
+          onClick={handleBtnClick}
+          className='movie-card__delete-btn'
+          type="button" />}
     </li>
   );
 }

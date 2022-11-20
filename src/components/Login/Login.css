@@ -27,20 +27,12 @@
 
 .login__form {
   display: grid;
-  min-width: 260px;
-  padding-bottom: calc(75px - 57px);
+  width: 260px;
 }
 
 @media screen and (min-width: 768px) {
   .login__form {
-    min-width: 396px;
-    padding-bottom: calc(42px - 24px);
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .login__form {
-    padding-bottom: calc(75px - 57px);
+    width: 396px;
   }
 }
 
@@ -53,14 +45,23 @@
   padding: 0;
   border: none;
   color: #FFFFFF;
-  margin-top: 267px;
+  margin-top: calc(156px + 267px - (69px * 2));
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
   .login__submit-btn {
-    margin-top: 179px;
+    margin-top: calc(156px + 179px - (69px * 2));
     width: 396px;
   }
+}
+
+.login__submit-btn:disabled {
+  cursor: default;
+  box-sizing: border-box;
+  border: 1px solid #EE3465;
+  background: transparent;
+  color: #EE3465;
 }
 
 .login__container {

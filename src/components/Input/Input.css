@@ -55,18 +55,17 @@
   font-weight: 500;
 }
 
-.input__input_type_last {
-  padding: 0;
-  margin: 0;
+.input__input_type_profile-email {
   border: none;
-  font-weight: 400;
+  margin-bottom: 18px;
 }
 
-.input__input_type_last:focus {
+.input__input_type_profile-email:focus {
   border: none;
 }
 
 .input__error {
+  width: 100%;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -76,6 +75,14 @@
   justify-self: start;
   margin-top: calc(17px * 2);
   display: none;
+  height: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.input__error_type_profile {
+  grid-row: 2/3;
 }
 
 .input__error_visible {

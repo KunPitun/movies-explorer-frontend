@@ -1,7 +1,7 @@
-import { BASE_URL } from "./utils/Api";
+import { URL } from "./utils/Constants";
 
-export const register = ( name, email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
+export const register = (name, email, password) => {
+  return fetch(`${URL.mainApiBaseUrl}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export const register = ( name, email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${URL.mainApiBaseUrl}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${URL.mainApiBaseUrl}/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -48,5 +48,5 @@ const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка ${res.status}`);
+  return Promise.reject({ message: `Ошибка ${res.status}`, status: res.status });
 }
